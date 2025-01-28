@@ -1,0 +1,10 @@
+//hacer la conexión a la base de datos
+use("sample_training")
+
+//A qué colección nos queremos conectar
+//db: parametro de conexión, zipzs: es la carpeta, find: metodo de busqueda
+db.zips.find({ state: "NY"})
+
+
+//Ejemplo propio, al final podemos aplicar un metodo de conteo
+db.trips.find({ "birth year": 1970 }).count()
