@@ -282,11 +282,13 @@ git add .
 
 git commit -m "start project"
 
-git push origin master     (no funciono porque no se llama master, para buscar como se llama ejecutamos: git branch)
+git rebase --continue
 
-se llama main, por lo tanto ejecutamos:
+git status
 
-git push origin main
+git push origin main --force
+
+
 
 
 
