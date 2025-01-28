@@ -288,6 +288,33 @@ git status
 
 git push origin main --force
 
+# Pasos para actualizar los commits y subir cambios al repositorio remoto
+
+1. Verifica los cambios realizados: git status
+2. Añade los cambios al área de preparación (staging area): git add .
+
+    El punto (.) indica que se añadirán todos los archivos modificados o nuevos. Si deseas añadir solo archivos específicos, usa:
+
+    git add nombre_del_archivo
+
+3. Crea un commit para guardar los cambios Escribe un mensaje claro que describa los cambios realizados:
+    git commit -m "Descripción de los cambios realizados"
+
+4. Envía los cambios al repositorio remoto Una vez creado el commit, puedes subir los cambios al remoto con:
+    git push origin main
+
+Si haces cambios frecuentes, automatiza un flujo más rápido:
+
+1. Añadir y confirmar todo en un solo comando:
+
+    git commit -am "Descripción de los cambios"
+
+    El parámetro -a añade automáticamente todos los archivos modificados (pero no los nuevos).
+    Úsalo solo si los archivos nuevos ya han sido añadidos previamente con git add.
+
+2. Empujar directamente después del commit: Si haces cambios frecuentes y quieres combinarlos, puedes usar:
+
+    git push origin main
 
 
 
