@@ -294,11 +294,15 @@ git push origin main --force
 2. Añade los cambios al área de preparación (staging area): git add .
 
     El punto (.) indica que se añadirán todos los archivos modificados o nuevos. Si deseas añadir solo archivos específicos, usa:
+        git add nombre_del_archivo
 
-    git add nombre_del_archivo
+    para agregar todos los cambios:
+        git add -A
 
 3. Crea un commit para guardar los cambios Escribe un mensaje claro que describa los cambios realizados:
     git commit -m "Descripción de los cambios realizados"
+
+    
 
 4. Envía los cambios al repositorio remoto Una vez creado el commit, puedes subir los cambios al remoto con:
     git push origin main
