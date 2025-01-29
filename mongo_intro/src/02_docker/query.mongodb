@@ -1,0 +1,10 @@
+//hacer la conexión a la base de datos
+use("platzi_store")
+
+//A qué colección nos queremos conectar
+//db: parametro de conexión, zipzs: es la carpeta, find: metodo de busqueda
+db.products.find({ name: "product_1"})
+
+
+//Ejemplo propio, al final podemos aplicar un metodo de conteo
+db.products.find({ "price": 1200 }).count()
