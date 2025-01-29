@@ -315,9 +315,150 @@ Si haces cambios frecuentes, automatiza un flujo más rápido:
 2. Empujar directamente después del commit: Si haces cambios frecuentes y quieres combinarlos, puedes usar:
 
     git push origin main
+    
+## Instalando Docker
+
+![comparación](images/image_25.png)
+
+[https://docs.docker.com/desktop/setup/install/mac-install/](https://docs.docker.com/desktop/setup/install/mac-install/)
+
+Docker es una herramienta que permite crear, gestionar y ejecutar aplicaciones en contenedores, que son entornos ligeros y portables. Estos contenedores incluyen todo lo necesario para que una aplicación funcione (código, librerías, dependencias), lo que garantiza que se ejecute de la misma manera en cualquier sistema.
+
+¿Para qué sirve Docker?
+Estandarización y portabilidad
+Puedes empaquetar una aplicación con todas sus dependencias y ejecutarla en cualquier máquina que tenga Docker instalado, independientemente del sistema operativo o configuración.
+
+Aislamiento
+Cada contenedor es independiente, lo que evita conflictos entre aplicaciones (por ejemplo, diferentes versiones de Python o bases de datos).
+
+Facilita el desarrollo
+Puedes usar imágenes preconfiguradas para desarrollar y probar sin configurar el entorno desde cero.
+
+Despliegue eficiente
+Docker es ideal para implementar aplicaciones en producción rápidamente, ya que todo el entorno está definido en el contenedor.
+
+Escalabilidad
+Es más fácil escalar aplicaciones dividiéndolas en microservicios, cada uno en su propio contenedor.
+
+Ahorro de recursos
+Comparado con las máquinas virtuales, los contenedores son más ligeros y rápidos, ya que comparten el mismo sistema operativo base.
+
+Ejemplo de uso:
+Si estás desarrollando una aplicación web, puedes correr un contenedor para la base de datos (MySQL) y otro para la aplicación (Node.js). Todo estará aislado pero podrá comunicarse entre sí.
+
+# Usuario Docker:
+joanmf439
+
+## Correr Mongo en Docker y de manera local
+
+Se puede correr cualquier otra base de datos, sin necesidad de drivers de instalación.
+La información se guarda en contenedores. facil de eliminar por ejemplo.
 
 
+# Levantar un contenedor para correr en Mongo.
 
+1. En nuestro proyecto creamos una archivo llamado docker-compose.yml (archivo para especificar cómo se conectan y configuran los contenedores de tu aplicación.)
+
+    En el archivo digitamos el codigo.
+
+documentación para revisar codigo:
+
+[https://hub.docker.com/_/mongo](https://hub.docker.com/_/mongo)
+
+    Debemos crear una carpeta llamada mongo_data para conecta con volumes
+
+          volumes:
+            - ./monogo_data:/data/db 
+
+    Esto guarda la info del contenedor
+
+    Esta información tambien se subirá al gitignore para que no suba al repositorio. en .gitignore:
+
+        mongo_data/
+
+2. En la terminal: docker-compose up -d mongodb
+
+    pero antes guardamos el anterior comando en una carpeta en src llamada 02_docker, aqui creamos el archivo docker.md
+
+3. checkeamos: docker-compose ps
+
+    genera los parametros que esta corriendo
+
+4. En Mongo  Compass hacemos una nueva conexión, aqui veremos que URI usa el local host y puerto 27017
+
+    Entramos a advanced connections
+
+    ![comparación](images/image_26.png)
+
+        seleccionamos: mongodb, por ser una conexión local, el otro es para la nube.
+
+    Entramos a Authentication: nuestro usuario: root pass: root123  (esto esta en el archivo docker-compose.yml)
+
+    Entramos a TLS/SSL: Lo seleccionamos en OFF
+
+    Le ponemos nombre a la conexión y elegimos un color: Mongo Docker
+
+5. Una vez conectados podemos ver 3 colecciones: admin, config, local
+
+    podemos crear mas y mas bases de datos.
+
+    ![comparación](images/image_27.png)
+
+
+    podemos insertar nuevos documentos:
+
+    ![comparación](images/image_28.png)
+
+    ejemplo de documento: insertamos name y price:
+
+    /** 
+* Paste one or more documents here
+*/
+{
+  "_id": {
+    "$oid": "679909249d8833eebb40d462"
+  },
+  "name": "product_1",
+  "price":1200
+}
+
+Quedo guardado en local una base de dato que se llama platzi_store y hemos creado una colección llamada products y agregado un documento. 
+
+6. En VSC tambien podemos hacer la conexión y consultar documentos. 
+
+    para esto necesitamos la url de conexión. para esto desconectamos y entramos a editar:
+
+    ![comparación](images/image_29.png)
+
+tomamos la url: mongodb://root:root123@localhost:27017/?tls=false
+
+
+Entramos a Mongo desde VSC, damos click en + para hacer una nueva conexión.
+seleccionamos conection string y pegamos la url en la parte superior, damos enter y esta la conexión a localhost:27017
+
+le podemos cambiar el nombre a Mongo-docker
+
+7. En la carpeta del proyecto generamos un archivo del query.mongodb y podemos tomar el codigo base del anterior query (Atlas)
+    para implementarlo aqui con nuestra base de datos.
+
+    debemos tener presente en cambiar el nombre de la base datos y las colecciones. 
+
+## TERMINAL DIRECTA DE MONGO (Mongosh)
+
+Ya vimos como usar el playground de VSC y Mongo Compass
+
+Nos conectaremos a la base de datos en la nube (Atlas) y tambien nuestra base de datos local.
+
+1. Abriremos una carpeta llamada 03_mongosh para las instrucciones.
+    aqui creamos un archivo llamado commands.md
+    aqui estaran las instrucciones para entrar a la terminal del contenedor que se esta corriendo.
+
+
+Hasta este punto ya nos podemos conectar a nuestras bases de datos desde:
+
+Mongo Compass;
+El playground de VSC;
+Directamente desde la terminal por mongosh 
 
 
 
