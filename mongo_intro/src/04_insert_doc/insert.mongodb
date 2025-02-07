@@ -1,0 +1,20 @@
+// crear una base de datos u usar una existente, en este caro la creará en la nube porque la base de datos no existe.
+
+use("platzi_store")
+
+//creación de colecciones con una instrucción de insertar documento (insertOne) en formato clave : valor
+
+
+db.products.insertOne({
+    name : "Product_1",
+    price : 1000
+})
+
+db.products.insertOne({
+    _id : 44,
+    name : "Product_2",
+    price : 2000
+})
+
+// Al dar play parte superior derecha, aparese el playground pero como 
+//si hubieramos insertado un solo documento, 

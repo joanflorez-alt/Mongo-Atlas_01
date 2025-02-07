@@ -1,0 +1,14 @@
+//nos conectamos a la colección
+use("sample_training")
+
+//nos conectamos a la base de datos zips con db.zips y hacemos la consulta de los documentos
+//con find() y contamos la cantidad de documentos con count()
+
+//para contar la cantidad de documentos:
+//db.zips.find().count()
+
+//para consultar la cantidad de documentos de una ciudad en especifico "CLEVELAND": 
+
+db.zips.find({ city : "CLEVELAND"})
+//el pop del primer documento es: 2369
+

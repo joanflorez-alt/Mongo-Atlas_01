@@ -1,0 +1,17 @@
+// conectamos con la base de datos:
+
+use("platzi_store")
+
+//hacemos la conexión db.products   y generamos el comando de actualización updateOne()
+// debemos implementar el operdore $inc: (increment) se basa en incrementar un valor numerico.
+
+
+//verifiquemos el price actual de algun producto en nuestro archivo query.mongodb
+//le precio actual del documento _id: 2 es price 200, aumentemos 1000 y verificamos el aumento en el query
+
+db.products.updateOne({ _id: 2}, { $inc: { price: 1000 } })
+
+
+
+
+

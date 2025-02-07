@@ -1,0 +1,13 @@
+use("platzi_store")
+
+// $pull: + $in para eliminar mas de un elemento en un array. en este caso el primer parametro o Json {_id: 4} lo dejaremos vacio
+// para que tome todos los _id y empleamos el metodo updateMany()
+
+db.inventory.updateMany({},
+    { $pull: {
+        tags: {
+            $in: ["book", "school", "appliance"]
+        } 
+        }
+    }
+)

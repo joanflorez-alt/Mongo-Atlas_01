@@ -465,6 +465,317 @@ El playground de VSC;
 Directamente desde la terminal por mongosh 
 
 
+## JSON vs BSON
+
+Es el formato en el que mongo guarda los documentos, 
+
+
+# JSON: facil de organizar la información en un documento. facil de leer, formato altamente usado en la industria.
+
+![comparación](images/image_30.png)
+
+Desventaja: 
+    - basado en texto, por ende consume mucho espacio.
+    - Es limitado, no tiene tantos tipos de datos, unicamente guarda (números, strings, booleans, arrays, otros subdocumento)
+
+Ejemplo de JSON:
+
+![comparación](images/image_31.png)
+
+# BSON: Es una representación binaria de un formato JSON, por lo tanto no consume tanto espacio.
+
+![comparación](images/image_32.png)
+
+![comparación](images/image_33.png)
+
+Ejemplo comparación JSON vs BSON
+
+![comparación](images/image_34.png)
+
+
+Tipos de datos en BSON:
+
+[https://www.mongodb.com/resources/languages/bson](https://www.mongodb.com/resources/languages/bson)
+
+
+## Para visualizar entremos a Mongo Compass
+
+Entramos a mongo-docker (recordemos: primero iniciar docker y seguidamente abrirlo desde mongo compass)
+
+Forma de insertar documentos y elegir el tipo de dato.
+
+paso 1:
+![comparación](images/image_35.png)
+
+paso 2:
+![comparación](images/image_36.png)
+
+paso 3:
+![comparación](images/image_37.png)
+
+paso 4:
+![comparación](images/image_38.png)
+
+
+Conclusión, Mongo guarda información BSON en formato JSON.
+
+API MONGO
+
+## OPERACIONES CRUD (Create, Read, Update, Delete)
+
+conectar: db.database
+consulta: find()
+conteo: count()
+
+ejemplo: db.database.fin().count()
+
+la salida sera la cantidad de documentos
+
+# INSERTANDO UN DOCUMENTO
+
+En este caso trabajaremos con Mongo Atlas (En la nube)
+En nuestro playground de VSC
+
+1. Creamos en el proyecto mongo_intro src/04_inset_doc
+
+    En esta carpeta creamos un archivo llamado insert.mongodb
+
+![comparación](images/image_39.png)
+
+
+Estando en insert.mongodb
+
+2. Creamos una base de datos con el siguiente comando use("platzi_store")
+
+continuar viendo el resto del codigo en el archivo.
+
+3. Al ejecutar el codigo con play aparece el identificador de un solo documento
+
+![comparación](images/image_40.png)
+
+en realidad esta identificando el segundo documento.
+
+4. Creemos un archivo code de consulta, crearemos el archivo: query.mongodb
+
+    revisar codigo del archivo. 
+
+    veremos que aunque en el paso 3, parece un solo identificador, realmente se insertaron los dos documentos, en este monento aparecen 4 documentos, porque se repitieron los dos anteriores, porque se volvio a ejecutar con play el archivo insert.mongodb
+
+5. tambien podemos generar nuestros propios id:
+
+
+db.products.insertOne({
+    _id : 1
+    name : "Product_1",
+    price : 1000
+})
+
+pero se debe tener cuidado para no generar conflicto,
+por ejemplo: si volvemos a ejecutar insert.mogodb con nuestro _id : 1 al volver a interstar con play, generará un conflicto porque estariamos ingresando el mismo _id dos veces.
+
+![comparación](images/image_41.png)
+
+# INSERTAR VARIOS DOCUMENTOS 
+
+1. creamos la carpeta 05_insert_many con el archivo: products.mongodb
+
+    revisar el codigo 
+
+2. creamos el archivo query.mongodb para realizar las consultas fuera del archivo que contiene los documentos para poder ver lo que guarda en la nube cuando se generan conflictos en los documentos. 
+
+NOTA: Si un documento genera conflicto, a partir de donde generó el conflicto, de ahi en adelante no dejera guardar mas documentos. (Còmo resolverlo???)
+
+
+Para esto se crea la instrucción: {odered: false} como otro objeto fuera del array (revisar archivo: products.mongodb)
+
+para verificar que la siguiente instrucción funciona:
+
+    1. crear un _id duplicado en products.mongodb
+    2. ejecutar el archivo de consulta query.mongodb
+
+# ACTUALIZAR UN DOCUMENTO updateOne()
+
+Ingresamos a Mongocompas,  y estando en monocompas, conectamos con mongoAtlas, 
+entramos a platzi_store veremos los productos que hemos estado creando en los pasos anteriores.
+
+sobre esta interfaz podemos modificar, eliminar, clonar cada documento.
+
+![comparación](images/image_42.png)
+
+Cómo se hacen estos cambios en codigo:
+
+1. creamos la carpeta 06_update_doc, podemos copiar los archivos de 05_insert_many para ubicarlos en la 06.
+
+2. conectamos a mongoatlas
+
+3. corregmimos el archivo products.mongodb quitando el conflicto de repetir _id y ejecutamos play
+
+4. podemos verificar en nuestro archivo query.mongodb que la base de datos ahora tiene los 4 documentos sin conflicto.
+
+# Operadores
+
+![comparación](images/image_44.png)
+
+5. generamos el archivo update_doc_set.mongodb
+
+    ver codigo con operador $set
+    este operador sirve para hacer cambios en los atributos y generar nuevos cambios
+
+6. Creamos el archivo update_doc_inc.mongodb
+
+    $inc sirve para incrementar valores.
+
+7. Crearemos el archivo object_id.mongodb
+
+    vamos al archivo products.mongodb y creamos otro documento pero sin id para que mongo genere
+    automaticamente el id
+
+![comparación](images/image_43.png)
+
+    se creo el nuevo documento con el id generado automaticamente por mongodb
+
+
+# ACTUALIZAR VARIOS DOCUMENTOS updateMany()
+
+updateMany()
+
+$set: tambien para crear nuevos atributos
+
+$rename: para renombrar atributos.
+
+$unset: para eliminar atributos
+
+otros operadores
+
+![comparación](images/image_53.png)
+
+En mongocompass vamos a la base de datos training y escogemos la base de datos de zips
+
+![comparación](images/image_45.png)
+
+podemos observar que hay 29470 documentos
+
+Hacemos una consulta: { city : 'CLEVELAND'}
+
+![comparación](images/image_46.png)
+
+mongocompass dice que hay 34 documentos. 
+encontramos tambien que la pop es la población, 
+
+Qué pasa si deseamos actualizar todos los 34 documentos que cumplen con esta condición.
+por ejemplo deseamos aumentar toda la población en 1000 
+
+1. Creamos la carpeta 07_update_many y en ella el archivo: update_many.mongodb
+
+2. creamos el query.mongodb y organizamos el codigo de consulta en este:
+
+    revisar codigo, queda solo para consultar los documentos
+
+    consultamos la población pop del primer documento es: 2369
+
+3. En update_many.mongodb organizamos el codigo operador para aumentar en 1000 toda la población
+    revisar codigo en el archivo. 
+![comparación](images/image_47.png)
+
+    vemos que se actualizaron 34 documentos.
+
+4. Consultamos en el query y veremos el cambio en pop, solo del primer documento paso de 2369 a 3369
+
+![comparación](images/image_48.png)
+
+5. El operados $set no solo sirve para actualizar un valor sino tambien para agregar nuevos atributos, crearemos el archivo set.mongodb, en este usamos operador $set
+ver codigo del archivo. 
+
+![comparación](images/image_49.png)
+
+veremos que se actualizaron los 34 documentos ahora con el nuevo atributo (consultar en query)
+
+![comparación](images/image_50.png)
+
+6. Renombrar atributos, por ejemplo cambiar el nombre del atributo anterior mynewatrib por newatrib
+
+    ver codigo
+
+7. Consultamos el query y veremos el cambio.
+
+![comparación](images/image_51.png)
+
+8. Ahora eliminaremos atributos con $unset
+
+creamo el archivo unset.mongodb y empleamos el operador para eliminar
+al ejecutar veremos que el atributo ya no esta
+
+![comparación](images/image_52.png)
+
+## ARRAY UPDATE operators 
+
+$push (agregar)  $pull (eliminar)
+
+![comparación](images/image_57.png)
+
+Operadores para trabajar con arrays
+
+Dato para trabajar:
+
+[https://gist.github.com/nicobytes/fbd8c63977217855ba8afd3e240651c9](https://gist.github.com/nicobytes/fbd8c63977217855ba8afd3e240651c9)
+
+tomamos Array Update Operators
+
+![comparación](images/image_54.png)
+
+Vamos a crear en platzi store un inventario primeramente vacio (drop()) y luego insertamos varios documentos. en este caso los tags, seran los arrys
+
+Conectamos con el dataset, conectamos con mongo-Atlas
+
+Creamos la carpeta 08_update_arrays
+
+1. Creamos el archivo dataset.mongodb, en este copiamos el codigo de: Array Update Operators y ejecutamos. 
+
+2. creamos el archivo query, el cual llamaremos find.mongodb en este dejamos el codigo de consulta:
+
+    use("platzi_store")
+    db.inventory.find()
+
+3. Generamos el archivo para el operador push, push.mongodb
+
+revisar el codigo, el operador push para agregar nuevos elemento en un array
+
+
+![comparación](images/image_55.png)
+
+luego ejecutamos el find.mongodb veremos que al _id: 4 se agrego un nuevo elemento en el array tags llamado "headphone".
+
+4. Generamos el archivo pull.mongodb, en el manejamos el operador $pull, para eliminar elementos de un array. En este caso ahora eliminaremos el elementos "headphone".
+
+    ejecutamos el archivo de consulta find.mongodb para verificar que efectivamente ya no esta el elemento "headphone" en el _id: 4 en tags.
+
+# ¿Cómo quitar un elemento de todos los arrays en todos los documentos?
+
+5. creamos el archivo pull_many.mongodb en este ejecutaremos el codigo para eliminar un elemento de todos los documentos en el array tags.
+
+ver el codigo. 
+
+antes de ejecutar el codigo, ver el estado actual de los arrays para ver donde esta la palabra "book" la cual vamos a eliminar. "book" esta en 3 documentos de los 5 que hay en total.
+
+![comparación](images/image_56.png)
+
+veremos que al ejecutar se abordaron los 5 documentos pero se hizo el cambio en 3. 
+
+consultamos nuevamente el find.mongodb para verificar que efectivamente ya no esta el elemento "book".
+
+# ¿Cómo quitar varios elementos en una sola instrucción?
+
+$in
+6. Creamos el archivo pull_many.mongodb y en este ubicamos el codico de pull.mongodb y lo modificamos agregando el operador $in.
+
+seguidamente corremos el archivo find.mongodb para verificar que efectivamente se borraron varios elementos del array tags en cada documento 
+
+
+
+
+
+
+
 
 
 

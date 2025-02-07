@@ -1,0 +1,19 @@
+// conectamos con la base de datos:
+
+use("platzi_store")
+
+//hacemos la conexión db.products   y generamos el comando de actualización updateOne()
+// debemos implementar los operdores de cambio $set:
+
+db.products.updateOne({ _id: 2}, { $set: { name: 'change name 2' } })
+
+
+//hacer varios cambios:
+
+db.products.updateOne({ _id: 3}, { $set: { name: 'change name 3', price: 30000 } })
+
+// generar nuevos atributos: (Nosql)
+
+db.products.updateOne({ _id: 4}, { $set: { name: 'change name 4', price: 40000, tags: ["A", "B", "C", "D"] } })
+
+

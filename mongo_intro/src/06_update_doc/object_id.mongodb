@@ -1,0 +1,21 @@
+//conectamos con la base de datos
+use("platzi_store")
+
+//usamos el operador objecId() para conectar con el id
+//y por ejemplo aumentamos el precio con $inc
+
+//se puede de la siguinte manera
+//db.products.updateOne({ _id: 2}, { $inc: { price: 1000 } })
+
+
+//o tambien de esta manera:
+
+db.products.updateOne(
+    { _id: ObjectId("67a17ab44fabc6e8021df28a")},
+    { $inc: { 
+        price: 2000 
+    } 
+}
+)
+
+//consultamos en el query

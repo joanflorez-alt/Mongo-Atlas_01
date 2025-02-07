@@ -1,0 +1,47 @@
+// crear una base de datos u usar una existente, en este caro la creará en la nube porque la base de datos no existe.
+
+use("platzi_store")
+
+// drop() toma la colección y vacia totalmente, borra todos los documentos. 
+
+
+db.products.drop()
+
+
+// Para insertar varios, aqui se insertar con instrucción de array [] y dentro del array los objetos
+
+db.products.insertMany([
+    {
+        _id : 1,
+        name : "product_1",
+        price : 100
+    },
+    {
+        _id : 2,
+        name : "product_2",
+        price : 200
+    },
+    {
+        _id : 1,
+        name : "product_3",
+        price : 300
+    },
+    {
+        _id : 4,
+        name : "product_4",
+        price : 400
+    }
+], {
+    ordered: false
+})
+
+//que retorne por medio de una busqueda los documentos ingresados
+
+db.products.find()
+
+//aqui podemos ejecutar varias veces sin crear mas documentos, porque al ejecutar el archivo,
+//ejecuta todos los comandos, y drop() vacia la colección.
+
+// por otro lado, si ingresamos _id duplicados no dejará insertar el documento u objeto
+//dupliado. por ejemplo al duplicar un _id este archivo generará error, pero en el query.mongodb
+//podremos observar que guardo los documento que no generan colición. 

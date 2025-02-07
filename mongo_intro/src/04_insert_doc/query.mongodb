@@ -1,0 +1,6 @@
+
+use("platzi_store")
+
+
+//codigo de consulta find
+db.products.find()
